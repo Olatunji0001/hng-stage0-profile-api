@@ -1,14 +1,12 @@
 import express from "express";
 import fetch from "node-fetch";
 
-
 const app = express();
-const PORT =  process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`app is listening on port ${PORT}`);
 });
-
 
 const getFact = async function () {
   try {
@@ -16,23 +14,34 @@ const getFact = async function () {
     const data = await getData.json();
     return data.fact;
   } catch (error) {
-    return{message: "failed to fetch data", error:error.message};
+    return { message: "failed to fetch data", error: error.message};
   }
 };
 
-
 app.get("/me", async (req, res) => {
   const timestamp = new Date().toISOString();
-  const fact = await getFact()
-  res.json({
-    status: "success",
-    user: {
-      email: "musbautunji@gmail.com",
-      name: "Musbau Olatunji A.K.A Tee jay",
-      stack: "Nodejs (Express)",
-    },
-    timestamp: timestamp,
-    fact : fact
-  });
+  const fact = await getFact();
+  if (fact.error) {
+    return res.status(503).json({
+      status: "error",
+      user: {
+        email: "musbautunji@gmail.com",
+        name: "Musbau Olatunji A.K.A Tee jay",
+        stack: "Nodejs (Express)",
+      },
+      timestamp: timestamp,
+      fact: fact,
+    });
+  } else {
+    return res.status(200).json({
+      status: "success",
+      user: {
+        email: "musbautunji@gmail.com",
+        name: "Musbau Olatunji A.K.A Tee jay",
+        stack: "Nodejs (Express)",
+      },
+      timestamp: timestamp,
+      fact: fact,
+    });
+  }
 });
-
