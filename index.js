@@ -19,7 +19,9 @@ const getFact = async function () {
 };
 
 app.get("/", (req, res) => {
-    res.json("welcome to Musbau Olatunji's profile, go to '/me' to see full profile details")
+    res.json({
+    message: "Welcome to Musbau Olatunji's profile API. Visit /me to see full details."
+  });
 })
 
 app.get("/me", async (req, res) => {
