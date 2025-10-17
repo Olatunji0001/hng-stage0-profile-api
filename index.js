@@ -2,7 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 
 const app = express();
-const PORT = 45687;
+const PORT = 5000;
 
 app.listen(PORT, () => {
   console.log(`app is listening on port ${PORT}`);
