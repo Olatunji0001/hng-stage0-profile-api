@@ -19,7 +19,7 @@ const getFact = async function () {
 };
 
 app.get("/", (req, res) => {
-    res.json("welcome to olatunji profile go to '/me' to see full profile")
+    res.json("welcome to Musbau Olatunji's profile, go to '/me' to see full profile details")
 })
 
 app.get("/me", async (req, res) => {
