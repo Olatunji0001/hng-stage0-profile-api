@@ -18,6 +18,10 @@ const getFact = async function () {
   }
 };
 
+app.get("/", (req, res) => {
+    res.json("welcome to olatunji profile go to '/me' to see full profile")
+})
+
 app.get("/me", async (req, res) => {
   const timestamp = new Date().toISOString();
   const fact = await getFact();
