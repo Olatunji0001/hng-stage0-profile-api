@@ -1,33 +1,39 @@
 import express from "express";
+import fetch from "node-fetch";
 
 const app = express();
 const PORT = 5000;
 
 app.listen(PORT, () => {
-  console.log(`app is listening on port: ${PORT}`);
+  console.log(`app is listening on port ${PORT}`);
 });
 
-const getData = async () => {
+const getFact = async function () {
   try {
-    const data = await fetch("https://catfact.ninja/fact");
-    const dataToJson = await data.json();
-    return dataToJson.fact;
+    const getData = await fetch("https://catfact.ninja/fact");
+    const data = await getData.json();
+    return data.fact;
   } catch (error) {
-   return { error: true, message: "Failed to fetch data"};
+    return { message: "failed to fetch data", error: error.message};
   }
 };
 
+app.get("/", (req, res) => {
+    res.json({
+    message: "Welcome to Musbau Olatunji's profile API. Visit /me to see full details."
+  });
+})
+
 app.get("/me", async (req, res) => {
   const timestamp = new Date().toISOString();
-  const fact = await getData();
-
+  const fact = await getFact();
   if (fact.error) {
-    return res.status(500).json({
+    return res.status(503).json({
       status: "error",
       user: {
         email: "musbautunji@gmail.com",
-        name: "Musbau Olatunji",
-        stack: "Nodejs(Express)",
+        name: "Musbau Olatunji A.K.A Tee jay",
+        stack: "Nodejs (Express)",
       },
       timestamp: timestamp,
       fact: fact,
@@ -37,8 +43,8 @@ app.get("/me", async (req, res) => {
       status: "success",
       user: {
         email: "musbautunji@gmail.com",
-        name: "Musbau Olatunji",
-        stack: "Nodejs(Express)",
+        name: "Musbau Olatunji A.K.A Tee jay",
+        stack: "Nodejs (Express)",
       },
       timestamp: timestamp,
       fact: fact,
